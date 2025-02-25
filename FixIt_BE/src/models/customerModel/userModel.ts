@@ -6,4 +6,21 @@ const register = async (phone: string, name: string, hashedPassword: string, rol
   return result.rows[0];
 };
 
-export { register };
+const findUserById = async (id: number) => {
+  const result = await pool.query("SELECT id, phone, name FROM users WHERE id = $1", [id]);
+  return result.rows[0];
+};
+
+const updateUser = async (id: number, updatedData: { phone?: string; name?: string; }) => {
+  const { phone, name } = updatedData;
+
+  const result = await pool.query(`update users
+                                   set phone =coalesce($1, phone),
+                                       name=coalesce($2, name)
+                                   where id = $3
+                                   returning id, phone,name`, [phone, name, id]);
+
+  return result.rows[0];
+};
+
+export { register, findUserById, updateUser };

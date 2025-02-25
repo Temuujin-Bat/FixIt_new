@@ -23,4 +23,15 @@ const createAppointment = async (
   return result.rows[0];
 };
 
-export { getServiceDuration, createAppointment };
+const findAppointmentById = async (appointmentId: number) => {
+  const result = await pool.query('select * from appointments where id = $1', [appointmentId]);
+
+  return result.rows[0];
+};
+
+const cancelAppointment = async (appointmentId: number) => {
+  await pool.query("UPDATE appointments SET status = 'cancelled' WHERE id = $1", [appointmentId]);
+};
+
+
+export { getServiceDuration, createAppointment, findAppointmentById, cancelAppointment };
