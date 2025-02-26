@@ -1,54 +1,36 @@
 // Third party
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 // Components
-import { TAxiosError } from "../../../types/responses/common";
-import { useError } from "../../useError";
-import { encryptData } from "../../../utils/crypto_util";
-import { TOKEN_KEY } from "../../../data/constants";
-import { TLoginRes } from "../../../types/responses";
-import { WelcomeController } from "../../../services";
-import { useGetProfileAPI } from "../profile/useGetProfile";
-import { TLoginReq } from "../../../types/requests";
+import { TLoginReq } from '../../../types/requests';
+import { WelcomeController } from '../../../services';
+import { TAxiosError, TLoginRes } from '../../../types/responses';
+import { useError } from '../../useError';
 
 export function useLoginAPI() {
   const navigate = useNavigate();
   const { handleReqError } = useError();
-  const { refetch } = useGetProfileAPI();
 
   const loginAPI = async (data: TLoginReq) => {
     const payload = {
-      email: data?.email.toLocaleLowerCase(),
+      phone: data?.phone,
       password: data?.password,
     };
 
-    const rsp = await WelcomeController().login<TLoginRes>(payload);
-
-    if ("authToken" in rsp && rsp.success) {
-      const token = rsp.authToken as string;
-
-      encryptData(TOKEN_KEY, token, "localStorage");
-    }
-
-    return rsp;
+    return await WelcomeController().login<TLoginRes>(payload);
   };
 
   return useMutation({
     mutationFn: loginAPI,
     onSuccess: async (rsp) => {
       if (rsp && rsp.success) {
-        await refetch();
-
-        navigate("/");
-      } else if (rsp.error && rsp.error?.response?.status === 406) {
-        throw { type: "loginError" };
-      } else if (rsp.error && rsp.error?.response?.status === 403) {
-        throw { type: "emailNotConfirmed" };
+        navigate('/');
+        console.log('Login successful!', rsp);
       } else if (rsp.error && rsp.error?.response?.status) {
         handleReqError(rsp.error);
-      } else if ("msg" in rsp) {
-        console.error(`ERROR! login failed! ${rsp.msg}`);
+      } else if ('msg' in rsp) {
+        console.error(`ERROR! resend verification failed! ${rsp.msg}`);
       }
     },
     onError: (error: TAxiosError) => {

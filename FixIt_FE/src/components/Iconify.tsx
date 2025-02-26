@@ -1,6 +1,9 @@
 import { forwardRef } from 'react';
+
+// Third party
 import { Icon, IconifyIcon } from '@iconify/react';
 
+// MUI
 import Box, { BoxProps } from '@mui/material/Box';
 
 
@@ -18,5 +21,7 @@ const Iconify = forwardRef<SVGElement, Props>(({ icon, width = 20, sx, ...other 
     {...other}
   />
 ));
+
+Iconify.displayName = 'Iconify';
 
 export { Iconify };

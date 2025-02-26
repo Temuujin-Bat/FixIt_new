@@ -5,10 +5,10 @@ function pxToRem(value: number) {
 }
 
 function responsiveFontSizes({
-  sm,
-  md,
-  lg,
-}: {
+                               sm,
+                               md,
+                               lg,
+                             }: {
   sm: number;
   md: number;
   lg: number;

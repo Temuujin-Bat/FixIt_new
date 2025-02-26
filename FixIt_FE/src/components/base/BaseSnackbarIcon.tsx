@@ -1,6 +1,10 @@
+import { FC } from 'react';
+
+// MUI
 import { alpha } from '@mui/material';
 import Box from '@mui/material/Box';
-import { FC } from 'react';
+
+// Components
 import { Iconify } from '../Iconify';
 
 type TBaseSnackbarIcon = {
@@ -20,7 +24,7 @@ const BaseSnackbarIcon: FC<TBaseSnackbarIcon> = ({ icon, color }) => {
     <Box
       component="span"
       sx={{
-        ml: 1.5,
+        mr: 1.5,
         width: 40,
         height: 40,
         display: 'flex',
@@ -28,7 +32,7 @@ const BaseSnackbarIcon: FC<TBaseSnackbarIcon> = ({ icon, color }) => {
         alignItems: 'center',
         justifyContent: 'center',
         color: `${color}.main !important`,
-        bgcolor: `${alpha(colorIconsMap[color], 0.16)} !important`,
+        backgroundColor: `${alpha(colorIconsMap[color], 0.16)} !important`,
       }}
     >
       <Iconify color={colorIconsMap[color]} icon={icon} width={24} height={24} />

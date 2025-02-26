@@ -1,7 +1,3 @@
-function createGradient(color1: string, color2: string) {
-  return `linear-gradient(to bottom, ${color1}, ${color2})`;
-}
-
 // SETUP COLORS
 const GRAY = {
   lighter: 'rgba(255, 255, 255, 1)', // White
@@ -9,7 +5,6 @@ const GRAY = {
   main: 'rgba(160, 160, 160, 1)', // Mid Gray
   dark: 'rgba(80, 80, 80, 1)', // Dark Gray
   darker: 'rgba(0, 0, 0, 1)', // Black
-  500: '#919EAB',
 };
 
 const PRIMARY = {
@@ -21,12 +16,13 @@ const PRIMARY = {
 };
 
 const SECONDARY = {
-  lighter: 'rgba(244, 114, 90, 1)', // Lighter Red
-  light: 'rgba(231, 76, 60, 1)', // Bright Red
-  main: 'rgba(192, 57, 43, 1)', // Main Red
-  dark: 'rgba(149, 36, 26, 1)', // Dark Red
-  darker: 'rgba(119, 30, 20, 1)', // Deep Dark Red
+  lighter: 'rgba(224, 224, 224, 1)', // Light Gray
+  light: 'rgba(189, 189, 189, 1)', // Soft Gray
+  main: 'rgba(158, 158, 158, 1)', // Medium Gray
+  dark: 'rgba(97, 97, 97, 1)', // Dark Gray
+  darker: 'rgba(66, 66, 66, 1)', // Deep Dark Gray
 };
+
 
 const INFO = {
   lighter: 'rgba(208, 242, 255, 1)', // Lighter Blue
@@ -60,16 +56,7 @@ const ERROR = {
   darker: 'rgba(122, 12, 46, 1)', // Deep Dark Red
 };
 
-const GRADIENTS = {
-  primary: createGradient(PRIMARY.light, PRIMARY.main),
-  secondary: createGradient(SECONDARY.light, SECONDARY.main),
-  success: createGradient(SUCCESS.light, SUCCESS.main),
-  warning: createGradient(WARNING.light, WARNING.main),
-  error: createGradient(ERROR.light, ERROR.main),
-};
-
 const COMMON = {
-  common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
   info: { ...INFO },
@@ -77,24 +64,11 @@ const COMMON = {
   warning: { ...WARNING },
   error: { ...ERROR },
   gray: GRAY,
-  gradients: GRADIENTS,
-  action: {
-    hoverOpacity: 0.08,
-    disabledOpacity: 0.48,
-  },
 };
 
 const palette = {
-  light: {
-    ...COMMON,
-    background: { paper: '#fff', default: '#fff' },
-    action: { ...COMMON.action },
-  },
-  dark: {
-    ...COMMON,
-    background: { paper: '#fff', default: '#fff' },
-    action: { ...COMMON.action },
-  },
+  ...COMMON,
+  background: { paper: '#fff', default: '#fff' },
 };
 
 export default palette;

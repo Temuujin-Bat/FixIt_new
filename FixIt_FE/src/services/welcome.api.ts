@@ -1,65 +1,35 @@
-// Hooks
-import { useRequest } from "../lib/hooks/index.ts"; // We make here HTTP requests
+// Third party
+import axios, { AxiosError } from 'axios';
 
 // Components
-import { CONTROLLERS } from "../data/constants.ts";
-import { TAxiosError } from "../types/responses";
-import { TLoginReq, TRegisterReq } from "../types/requests";
+import { CONTROLLERS } from '../data/constants';
+import { TLoginReq } from '../types/requests/welcome.type';
+import { TAxiosError } from '../types/responses/common';
+import { BASE_URL } from '../../config';
 
-export function WelcomeController() {
-  const { axiosRequest, initRequestOptions } = useRequest();
+const WelcomeController = () => {
+  const controllerName = CONTROLLERS.CUSTOMER;
 
-  const controllerName = CONTROLLERS.LOGIN;
-
-  const login = <T>(
+  const login = async <T>(
     data: TLoginReq
   ): Promise<T | { success: boolean; error: TAxiosError }> => {
-    const requestOptions = initRequestOptions(data, { method: "POST" });
+    try {
+      const res = await axios.post<T>(`${BASE_URL}/${controllerName}/auth/login`, data, { withCredentials: true });
 
-    return axiosRequest(`${controllerName}/authenticate`, requestOptions);
-  };
-
-  const register = <T>(
-    data: TRegisterReq
-  ): Promise<T | { success: boolean; error: TAxiosError }> => {
-    const requestOptions = initRequestOptions(data, { method: "POST" });
-
-    return axiosRequest(`${controllerName}/register`, requestOptions);
-  };
-
-  const resetPassword = <T>(data: {
-    email: string;
-  }): Promise<T | { success: boolean; error: TAxiosError }> => {
-    const requestOptions = initRequestOptions(data, { method: "POST" });
-
-    return axiosRequest(`${controllerName}/reset`, requestOptions);
-  };
-
-  const setPasswordAfterReset = <T>(data: {
-    password: string;
-    resetToken: string;
-  }): Promise<T | { success: boolean; error: TAxiosError }> => {
-    const requestOptions = initRequestOptions(data, { method: "POST" });
-
-    return axiosRequest(`${controllerName}/set_password`, requestOptions);
-  };
-
-  const resendVerificationEmail = <T>(data: {
-    email: string;
-  }): Promise<T | { success: boolean; error: TAxiosError }> => {
-    const requestOptions = initRequestOptions(data, { method: "POST" });
-
-    return axiosRequest(
-      `${controllerName}/resend_verification_email`,
-      requestOptions
-    );
+      return res.data;
+    } catch (err) {
+      console.log('Login request error', err);
+      return {
+        success: false,
+        error: err as AxiosError & TAxiosError,
+      };
+    }
   };
 
   return {
     login,
-    register,
-    resetPassword,
-    setPasswordAfterReset,
-    resendVerificationEmail,
   };
-}
+};
+
+
+export { WelcomeController };
