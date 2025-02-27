@@ -5,7 +5,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { HeartBroken } from '@mui/icons-material';
 
 // Components
-import { LoginModal, RegisterModal } from '../welcome/components';
+import { LoginModal, RegisterModal } from '../../welcome/components';
 
 const GuestProfile = () => {
   const [openLoginModal, setOpenLoginModal] = useState(false);

@@ -6,5 +6,5 @@ const findUserByPhoneAndRole = async (phone: string, role: string) => {
 
   return result.rows[0];
 };
-
+as
 export { findUserByPhoneAndRole };

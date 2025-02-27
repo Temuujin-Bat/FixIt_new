@@ -1,9 +1,15 @@
-import { IBaseResponse } from "./common";
+import { IBaseResponse } from './common';
+
+type TCustomer = {
+  id: number,
+  phone: string,
+  name: string,
+  role: 'customer',
+  created_at: string
+};
 
 export type TLoginRes = IBaseResponse & {
   success: boolean;
   msg: string;
-  data: {
-    authToken?: string;
-  };
+  customer: TCustomer;
 };

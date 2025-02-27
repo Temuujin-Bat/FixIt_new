@@ -7,10 +7,15 @@ import { TLoginReq } from '../../../types/requests';
 import { WelcomeController } from '../../../services';
 import { TAxiosError, TLoginRes } from '../../../types/responses';
 import { useError } from '../../useError';
+import { useAppDispatch } from '../../useAppStore';
+import { authenticateActions } from '../../../store/authenticate/slice';
+import { setLocalValue } from '../../../utils/storage';
 
 export function useLoginAPI() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { handleReqError } = useError();
+
 
   const loginAPI = async (data: TLoginReq) => {
     const payload = {
@@ -24,9 +29,12 @@ export function useLoginAPI() {
   return useMutation({
     mutationFn: loginAPI,
     onSuccess: async (rsp) => {
-      if (rsp && rsp.success) {
+      if (rsp?.success && 'customer' in rsp) {
+        dispatch(authenticateActions.setCustomerInfo(rsp.customer));
+
+        setLocalValue('phone', rsp.customer.phone);
+
         navigate('/');
-        console.log('Login successful!', rsp);
       } else if (rsp.error && rsp.error?.response?.status) {
         handleReqError(rsp.error);
       } else if ('msg' in rsp) {

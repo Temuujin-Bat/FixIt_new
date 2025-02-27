@@ -2,14 +2,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-// import { persistor } from "../store";
+// Components
+import { persist } from '../store';
+
 
 export function useCommon() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    // await persistor.purge();
+    await persist.purge();
     queryClient.removeQueries();
     localStorage.clear();
     navigate('/');

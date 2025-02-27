@@ -2,10 +2,10 @@
 import axios, { AxiosError } from 'axios';
 
 // Components
-import { CONTROLLERS } from '../data/constants';
-import { TLoginReq } from '../types/requests/welcome.type';
-import { TAxiosError } from '../types/responses/common';
+import { TLoginReq } from '../types/requests';
+import { TAxiosError } from '../types/responses';
 import { BASE_URL } from '../../config';
+import { CONTROLLERS } from '../utils/enums';
 
 const WelcomeController = () => {
   const controllerName = CONTROLLERS.CUSTOMER;
@@ -26,8 +26,23 @@ const WelcomeController = () => {
     }
   };
 
+  const logout = async <T>(): Promise<T | { success: boolean; error: TAxiosError }> => {
+    try {
+      const res = await axios.post<T>(`${BASE_URL}/${controllerName}/auth/logout`, { withCredentials: true });
+
+      return res.data;
+    } catch (err) {
+      console.log('Logout request error', err);
+      return {
+        success: false,
+        error: err as AxiosError & TAxiosError,
+      };
+    }
+  };
+
   return {
     login,
+    logout
   };
 };
 
