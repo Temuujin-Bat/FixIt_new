@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { findUserByPhoneAndRole } from "../../models/userModel";
+import { findUserByPhoneAndRole } from "../../models/authModel";
 import { validatePassword } from "../../utils/authUtils";
 
 dotenv.config();

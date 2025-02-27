@@ -4,7 +4,7 @@ import { authenticateUser } from "../../middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.post('/get-profile', authenticateUser, getProfile);
-router.post('/update-profile', authenticateUser, updateProfile);
+router.post('/get', authenticateUser, getProfile);
+router.post('/update', authenticateUser, updateProfile);
 
 export default router;

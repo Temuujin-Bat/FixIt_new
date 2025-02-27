@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { register } from "../../models/customerModel/userModel";
-import { findUserByPhoneAndRole } from "../../models/userModel";
+import { findUserByPhoneAndRole, removeRefreshToken, updateRefreshToken } from '../../models/authModel';
 import { hashPassword, validatePassword } from "../../utils/authUtils";
 
 const customerLogin = async (req: Request, res: Response) => {
@@ -10,25 +10,46 @@ const customerLogin = async (req: Request, res: Response) => {
   try {
     const user = await findUserByPhoneAndRole(phone, 'customer');
     if (!user) {
-      res.status(400).json({ message: 'Invalid phone number or password' });
+      res.status(400).json({ success: false, msg: 'Invalid phone number or password' });
       return;
     }
 
     const validPassword = await validatePassword(password, user.password);
     if (!validPassword) {
-      res.status(400).json({ message: 'Invalid phone number or password' });
+      res.status(400).json({ success: false, msg: 'Invalid phone number or password' });
       return;
     }
 
-    const token = jwt.sign({
+    const accessToken = jwt.sign({
       id: user.id,
       phone: user.phone,
       role: user.role
-    }, process.env.JWT_SECRET as string, { expiresIn: '1h' });
+    }, process.env.JWT_SECRET as string, { expiresIn: '15m' });
+
+    const refreshToken = jwt.sign({ id: user.id }, process.env.REFRESH_SECRET as string, {
+      expiresIn: '7d'
+    });
+
+    await updateRefreshToken(user.id, refreshToken);
+
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    })
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
-      token,
-      user: {
+      msg: 'Logged in successfully',
+      success: true,
+      customer: {
         id: user.id,
         phone: user.phone,
         name: user.name,
@@ -62,4 +83,37 @@ const customerRegister = async (req: Request, res: Response) => {
   }
 };
 
-export { customerLogin, customerRegister };
+const logout = async (req: Request, res: Response) => {
+  const { refreshToken } = req.cookies;
+
+  if (!refreshToken) {
+    res.status(400).json({ message: "No refresh token provided" });
+    return;
+  }
+
+  try {
+    await removeRefreshToken(refreshToken);
+
+    // Clear cookies
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+
+    res.status(200).json({  status:'success', msg: "Logged out successfully" });
+  } catch (error) {
+    console.error("Logout Error:", error);
+    res.status(500).json({ message: "Server error" });
+    return;
+  }
+};
+
+
+export { customerLogin, customerRegister, logout };

@@ -6,14 +6,15 @@ interface AuthRequest extends Request{
 }
 
 const authenticateUser = (req: AuthRequest, res: Response, next: NextFunction) => {
-  const token = req.header('Authorization');
+  const token = req.cookies.accessToken;
+
   if (!token) {
     res.status(401).json({ message: "Access denied. No token provided." });
     return;
   }
 
   try {
-    req.user = jwt.verify(token.replace('Bearer ', ''), process.env.JWT_SECRET as string);
+    req.user = jwt.verify(token, process.env.JWT_SECRET as string);
 
     next();
   } catch (error) {

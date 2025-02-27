@@ -11,14 +11,13 @@ const findUserById = async (id: number) => {
   return result.rows[0];
 };
 
-const updateUser = async (id: number, updatedData: { phone?: string; name?: string; }) => {
-  const { phone, name } = updatedData;
+const updateUser = async (id: number, updatedData: { name?: string; }) => {
+  const { name } = updatedData;
 
   const result = await pool.query(`update users
-                                   set phone =coalesce($1, phone),
-                                       name=coalesce($2, name)
-                                   where id = $3
-                                   returning id, phone,name`, [phone, name, id]);
+                                   set name = coalesce($1, name)
+                                   where id = $2
+                                   returning id, name`, [name, id]);
 
   return result.rows[0];
 };

@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 import adminAuthRoutes from './routes/admin/authRoutes';
 
@@ -15,8 +16,15 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // ✅ Set this to your frontend URL
+  credentials: true, // ✅ Allow sending cookies (for JWT in httpOnly cookies)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // ✅ Allow standard methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // ✅ Allow these headers
+}));
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.get('/', (_,res)=>{
   res.send('FixIt Backend is Running!')

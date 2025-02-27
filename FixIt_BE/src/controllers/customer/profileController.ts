@@ -35,11 +35,11 @@ const updateProfile = async (req: AuthRequest, res: Response) => {
     }
 
     const userId = req.user.id;
-    const { phone, name } = req.body;
+    const { name } = req.body;
 
-    const updatedUser = await updateUser(userId, { phone, name });
+    await updateUser(userId, { name });
 
-    res.json({ message: "Profile updated successfully", user: updatedUser });
+    res.json({ success: true, msg: "Profile updated successfully" });
   } catch (error) {
     console.error("Update Profile Error:", error);
     res.status(500).json({ message: "Server error" });

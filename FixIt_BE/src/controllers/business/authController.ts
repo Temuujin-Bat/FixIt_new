@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findUserByPhoneAndRole } from "../../models/userModel";
+import { findUserByPhoneAndRole } from "../../models/authModel";
 import { validatePassword } from "../../utils/authUtils";
 import jwt from "jsonwebtoken";
 
