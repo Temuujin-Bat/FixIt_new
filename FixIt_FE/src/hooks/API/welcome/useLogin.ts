@@ -1,6 +1,7 @@
 // Third party
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 // Components
 import { TLoginReq } from '../../../types/requests';
@@ -11,10 +12,12 @@ import { useAppDispatch } from '../../useAppStore';
 import { authenticateActions } from '../../../store/authenticate/slice';
 import { setLocalValue } from '../../../utils/storage';
 
+
 export function useLoginAPI() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { handleReqError } = useError();
+  const { enqueueSnackbar } = useSnackbar();
 
 
   const loginAPI = async (data: TLoginReq) => {
@@ -31,6 +34,10 @@ export function useLoginAPI() {
     onSuccess: async (rsp) => {
       if (rsp?.success && 'customer' in rsp) {
         dispatch(authenticateActions.setCustomerInfo(rsp.customer));
+
+        enqueueSnackbar(`Амжилттай нэвтэрлээ!`, {
+          variant: 'success',
+        });
 
         setLocalValue('phone', rsp.customer.phone);
 

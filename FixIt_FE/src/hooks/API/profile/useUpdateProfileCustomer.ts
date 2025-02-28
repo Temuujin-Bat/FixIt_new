@@ -5,16 +5,17 @@ import { useMutation } from '@tanstack/react-query';
 import { IBaseResponse, TAxiosError } from '../../../types/responses';
 import { useError } from '../../useError';
 import { CustomerProfileController } from '../../../services';
-import { useAppDispatch } from '../../useAppStore';
+import { useAppDispatch, useAppSelector } from '../../useAppStore';
 import { authenticateActions } from '../../../store/authenticate/slice';
 import { useSnackbar } from 'notistack';
+import { getCustomerInfo } from '../../../store/authenticate/selectors';
 
 
 export function useUpdateProfileCustomerAPI() {
   const dispatch = useAppDispatch();
   const { handleReqError } = useError();
   const { enqueueSnackbar } = useSnackbar();
-
+  const selectedCustomer = useAppSelector(getCustomerInfo);
 
   const updateAPI = async (data: { name: string }) => {
     const payload = {
@@ -28,9 +29,9 @@ export function useUpdateProfileCustomerAPI() {
     mutationFn: updateAPI,
     onSuccess: async (rsp, variables) => {
       if (rsp && rsp?.success) {
-        dispatch(authenticateActions.setCustomerInfo({ name: variables.name }));
+        dispatch(authenticateActions.setCustomerInfo({ ...selectedCustomer, name: variables.name }));
 
-        enqueueSnackbar(`ברוכים הבאים לאיירסופט אדמין`, {
+        enqueueSnackbar(`Мэдээллийг амжилттай өөрчиллөө`, {
           variant: 'success',
         });
       } else if (rsp.error && rsp.error?.response?.status) {

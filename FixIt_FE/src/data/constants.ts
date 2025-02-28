@@ -4,5 +4,20 @@ const NAVBAR_MENUS = [
   { url: '/profile', name: 'Профайл' },
 ];
 
+const REACT_SETTINGS = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
-export { NAVBAR_MENUS, };
+const CHOOSE_SERVICE = [
+  'Үсчин сонгох',
+  'Үйлчилгээ сонгох',
+  'Өдөр, цаг сонгох',
+  'Зөвшөөрөх'
+];
+
+
+export { NAVBAR_MENUS, REACT_SETTINGS, CHOOSE_SERVICE };

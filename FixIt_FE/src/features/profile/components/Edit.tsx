@@ -41,7 +41,7 @@ const Edit = () => {
             }}
             startIcon={<EditIcon fontSize={'small'} />}
           >
-            Мэдээлэл засах
+            Мэдээлэл өөрчлөх
           </Button>
         </Stack>
       </Paper>

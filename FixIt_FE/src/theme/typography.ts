@@ -81,7 +81,6 @@ const typography = {
     fontSize: pxToRem(16),
   },
   body2: {
-    fontWeight: 500,
     lineHeight: 22 / 14,
     fontSize: pxToRem(14),
   },

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 // MUI
 import { Box, Button, IconButton, Modal, Stack, Typography } from '@mui/material';
@@ -29,7 +29,7 @@ const EditModal = ({ open, onClose }: TModal) => {
   const defaultValues = useMemo(
     () => ({
       name: selectedCustomer.name || '',
-      phone: selectedCustomer.phone || ''
+      phone: selectedCustomer.phone
     }),
     [selectedCustomer],
   );
@@ -44,15 +44,14 @@ const EditModal = ({ open, onClose }: TModal) => {
     handleSubmit,
   } = methods;
 
-  useEffect(() => {
-    reset(defaultValues);
-  }, [selectedCustomer, reset, defaultValues]);
-
   const onSubmit = async (data: { name: string }) => {
     try {
       updateProfile(data, {
         onSuccess: () => {
-          reset();
+          reset((prevValues) => ({
+            ...prevValues,
+            name: data.name,
+          }), { keepDirty: false, keepValues: true });
           onClose();
         }
       });
@@ -82,7 +81,7 @@ const EditModal = ({ open, onClose }: TModal) => {
             <Close fontSize="medium" />
           </IconButton>
 
-          <Typography variant="h6" sx={{ textAlign: 'center', mb: 2 }}>Мэдээлэл засах
+          <Typography variant="h6" sx={{ textAlign: 'center', mb: 2 }}>Мэдээлэл өөрчлөх
           </Typography>
 
           <Stack spacing={3}>

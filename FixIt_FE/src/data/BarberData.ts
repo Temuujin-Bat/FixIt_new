@@ -83,3 +83,27 @@ export const barbershops = [
     ],
   },
 ];
+
+export type Service = {
+  id: number;
+  name: string;
+  price: number;
+  duration: number;
+};
+
+export type Worker = {
+  id: number;
+  name: string;
+  specialty: string;
+  services: Service[];
+};
+
+export type Barbershop = {
+  id: number;
+  name: string;
+  location: string;
+  rating: number;
+  image: string;
+  workers: Worker[];
+};
+
