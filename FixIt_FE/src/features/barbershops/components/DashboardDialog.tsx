@@ -1,22 +1,39 @@
 // MUI
-import { AppBar, Box, Dialog, IconButton, Toolbar, Typography } from '@mui/material';
-import { Close } from '@mui/icons-material';
+import { Box, Dialog } from '@mui/material';
 
 // Components
-import { TModal } from '../type';
+import { BarberSelection, Footer, Gallery, Header, RegisterBusinessAction, Reviews } from '../components';
+import { TBarbershop } from '../type';
 
-const DashboardDialog = ({ open, onClose }: TModal) => {
+const DashboardDialog = ({ open, onClose, barber }: {
+  open: boolean;
+  onClose: () => void,
+  barber: TBarbershop | null
+}) => {
+
   return (
     <Dialog fullScreen open={open} onClose={onClose}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={onClose}>
-            <Close />
-          </IconButton>
-          <Typography variant="h6">Full Screen Dialog</Typography>
-        </Toolbar>
-      </AppBar>
-      <Box p={3}>Your content here</Box>
+      <Box sx={{
+        height: '100%',
+        overflowY: 'auto',
+        boxSizing: 'border-box',
+        backgroundColor: 'secondary.lighter',
+        '&::-webkit-scrollbar': { width: 6 },
+        '&::-webkit-scrollbar-thumb': { backgroundColor: '#888', borderRadius: '4px' },
+        '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#555' },
+      }}>
+        <Header barber={barber} onClose={onClose} />
+
+        <BarberSelection barber={barber} />
+
+        <Gallery />
+
+        <RegisterBusinessAction />
+
+        <Reviews />
+
+        <Footer />
+      </Box>
     </Dialog>
   );
 };

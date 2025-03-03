@@ -11,5 +11,6 @@ type TCustomer = {
 export type TLoginRes = IBaseResponse & {
   success: boolean;
   msg: string;
+  accessToken: string;
   customer: TCustomer;
 };

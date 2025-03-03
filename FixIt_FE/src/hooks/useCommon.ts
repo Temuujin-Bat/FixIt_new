@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 // Components
 import { persist } from '../store';
 
-
 export function useCommon() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();

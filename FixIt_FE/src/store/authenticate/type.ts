@@ -1,10 +1,8 @@
 // Components
-import { TCustomer } from '../../types';
+import { TCustomer } from "../../types";
 
 export type TCustomerState = {
   customerInfo: TCustomer;
-};
-
-export type RootState = {
-  authenticateReducer: TCustomerState;
+  accessToken: string | null;
+  isRefreshing: boolean;
 };

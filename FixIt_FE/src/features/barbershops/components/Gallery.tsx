@@ -1,9 +1,9 @@
 // MUI
 import { Box, Typography } from '@mui/material';
 
-const ModalGallery = () => {
+const Gallery = () => {
   return (
-    <Box sx={{ borderRadius: 10, backgroundColor: 'black', padding: 1, mt: 3 }}>
+    <Box sx={{ borderRadius: 10, backgroundColor: 'black', padding: 1, mt: 3, height: '150px' }}>
       <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eget lacus a felis fermentum
         malesuada. Nulla facilisi. Sed convallis, metus nec condimentum egestas, sapien velit rhoncus magna, et
@@ -13,4 +13,4 @@ const ModalGallery = () => {
   );
 };
 
-export { ModalGallery };
+export { Gallery };

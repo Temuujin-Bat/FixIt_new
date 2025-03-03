@@ -2,26 +2,30 @@ import { useState } from 'react';
 
 // MUI
 import { Avatar, Box, Button, Container, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { ArrowForward } from '@mui/icons-material';
+import { ArrowForward, LocationOn } from '@mui/icons-material';
 
 // Third party
 import Slider from 'react-slick';
 
 // Components
 import { DashboardDialog, DashboardModal } from './components';
-import { Barbershop, barbershops } from '../../data/BarberData';
+import { barbershops } from '../../data/BarberData';
 import { REACT_SETTINGS } from '../../data/constants';
+import { TBarbershop } from './type.ts';
 
 const BarberShop = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [open, setOpen] = useState(false);
-  const [selectedBarber, setSelectedBarber] = useState<Barbershop | null>(null);
+  const [ open, setOpen ] = useState(false);
+  const [ selectedBarber, setSelectedBarber ] = useState<TBarbershop | null>(null);
 
   return (
     <>
-      <Container maxWidth="xs" sx={{ mt: 3 }}>
+      <Container
+        maxWidth="xs"
+        sx={{ mt: 3 }}
+      >
         {barbershops.map((barber, index) => (
           <Box
             key={barber.id}
@@ -34,11 +38,30 @@ const BarberShop = () => {
             }}
           >
             <Box sx={{ padding: 2, display: 'flex', alignItems: 'center' }}>
-              <Avatar sx={{ width: 50, height: 50 }} />
+              <Avatar sx={{ width: 50, height: 50 }} src={barber?.logo} />
 
               <Box ml={2}>
                 <Typography variant="subtitle2">{barber.name}</Typography>
-                <Typography variant="body2">{barber.location}</Typography>
+
+                <Box
+                  component="a"
+                  href={`https://www.google.com/maps?q=${barber.location.XCoordinates},${barber.location.YCoordinates}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: -.5,
+                    textDecoration: 'none',
+                    color: 'secondary.darker',
+                    '&:hover': {
+                      cursor: 'pointer'
+                    }
+                  }}>
+                  <LocationOn fontSize={'small'} />
+                  <Typography variant="body2">{barber.location.address}</Typography>
+                </Box>
+
               </Box>
             </Box>
 
@@ -91,7 +114,8 @@ const BarberShop = () => {
                      }}>
                   <Box>
                     <Typography variant="subtitle1">{worker.services[0].name}</Typography>
-                    <Typography variant="body2" color={'secondary.dark'}>{worker.name}</Typography>
+                    <Typography variant="body2"
+                                color={'secondary.dark'}>{worker.name}</Typography>
                   </Box>
 
                   <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -113,7 +137,8 @@ const BarberShop = () => {
                   cursor: 'pointer'
                 }
               }}>
-              <Typography variant="subtitle1" color={'primary.main'}>Бүх үйлчилгээг үзэх</Typography>
+              <Typography variant="subtitle1"
+                          color={'primary.main'}>Бүх үйлчилгээг үзэх</Typography>
               <ArrowForward sx={{ color: 'primary.main', fontSize: 'large', ml: 1 }} />
             </Box>
           </Box>
@@ -126,7 +151,7 @@ const BarberShop = () => {
           onClose={() => setOpen(false)}
           barber={selectedBarber}
         />
-      ): (
+      ) : (
         <DashboardModal
           open={open}
           onClose={() => setOpen(false)}

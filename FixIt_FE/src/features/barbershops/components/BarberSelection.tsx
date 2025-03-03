@@ -10,32 +10,43 @@ import { useForm } from 'react-hook-form';
 import {
   ActiveStep,
   BackAction,
+  FifthStep,
   FirstStep,
   FourthStep,
   SecondStep,
+  SixthStep,
   StepActions,
   StepTitle,
   ThirdStep
 } from '../components';
 import { FormProvider } from '../../../components/hookForm';
-import { TBarbershop, TService, TWorker } from '../type';
+import { TBarbershop, TServices, TWorker } from '../type';
+import { useAppSelector } from '../../../hooks/useAppStore';
+import { getCustomerInfo } from '../../../store/authenticate/selectors';
 
-const BarberSelection = ({ barber }: { barber: TBarbershop }) => {
-  const [activeStep, setActiveStep] = useState<number>(0);
+const BarberSelection = ({ barber }: { barber: TBarbershop | null }) => {
+  const [ activeStep, setActiveStep ] = useState<number>(0);
+  const selectedCustomer = useAppSelector(getCustomerInfo);
 
   const defaultValues = useMemo(
     () => ({
       worker: null as TWorker | null,
-      service: null as TService | null
+      service: null as TServices | null,
+      date: '',
+      time: '',
+      name: selectedCustomer?.name,
+      phone: selectedCustomer?.phone,
+      note: '',
     }),
-    [],
+    [ selectedCustomer ],
   );
 
   const methods = useForm({
     defaultValues,
   });
 
-  const {} = methods;
+  const { watch } = methods;
+  console.log(watch('date'));
 
   return (
     <FormProvider methods={methods}>
@@ -47,9 +58,10 @@ const BarberSelection = ({ barber }: { barber: TBarbershop }) => {
           mt: 3,
           position: 'relative'
         }}>
-        <ActiveStep activeStep={activeStep} totalSteps={4} />
+        <ActiveStep activeStep={activeStep} totalSteps={5} />
 
-        {activeStep != 0 && <BackAction prev={() => setActiveStep(activeStep - 1)} />}
+        {(activeStep != 0 && activeStep != 5) &&
+            <BackAction prev={() => setActiveStep(activeStep - 1)} />}
 
         <StepTitle step={activeStep} />
 
@@ -57,7 +69,8 @@ const BarberSelection = ({ barber }: { barber: TBarbershop }) => {
         {activeStep === 1 && <SecondStep />}
         {activeStep === 2 && <ThirdStep />}
         {activeStep === 3 && <FourthStep />}
-
+        {activeStep === 4 && <FifthStep />}
+        {activeStep === 5 && <SixthStep barber={barber} />}
 
         <StepActions
           activeStep={activeStep}

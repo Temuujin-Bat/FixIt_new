@@ -15,9 +15,9 @@ const REACT_SETTINGS = {
 const CHOOSE_SERVICE = [
   'Үсчин сонгох',
   'Үйлчилгээ сонгох',
-  'Өдөр, цаг сонгох',
+  'Өдөр сонгох',
+  'Цаг сонгох',
   'Зөвшөөрөх'
 ];
-
 
 export { NAVBAR_MENUS, REACT_SETTINGS, CHOOSE_SERVICE };

@@ -2,9 +2,9 @@
 import { Box, Modal } from '@mui/material';
 
 // Components
-import { TModal } from '../type';
 import { BarberSelection } from './BarberSelection';
-import { ModalFooter, ModalGallery, ModalHeader, ModalRegisterBusinessAction, ModalReviews } from '../components';
+import { Footer, Gallery, Header, RegisterBusinessAction, Reviews } from '../components';
+import { TBarbershop } from '../type.ts';
 
 const style = {
   height: '100%',
@@ -17,7 +17,11 @@ const style = {
   '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#555' },
 };
 
-const DashboardModal = ({ open, onClose, barber }: TModal) => {
+const DashboardModal = ({ open, onClose, barber }: {
+  open: boolean,
+  onClose: () => void,
+  barber: TBarbershop | null
+}) => {
   return (
     <Modal
       open={open}
@@ -30,24 +34,24 @@ const DashboardModal = ({ open, onClose, barber }: TModal) => {
           borderRadius: 10,
           boxShadow: 24,
           minWidth: 300,
-          width: 500,
+          width: 550,
           maxWidth: 600,
           height: '85vh',
           overflow: 'hidden',
         }}
       >
         <Box sx={style}>
-          <ModalHeader barber={barber} onClose={onClose} />
-
-          <ModalGallery />
+          <Header barber={barber} onClose={onClose} />
 
           <BarberSelection barber={barber} />
 
-          <ModalRegisterBusinessAction />
+          <Gallery />
 
-          <ModalReviews />
+          <RegisterBusinessAction />
 
-          <ModalFooter />
+          <Reviews />
+
+          <Footer />
         </Box>
       </Box>
     </Modal>

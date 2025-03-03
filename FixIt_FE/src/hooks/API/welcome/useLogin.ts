@@ -12,13 +12,11 @@ import { useAppDispatch } from '../../useAppStore';
 import { authenticateActions } from '../../../store/authenticate/slice';
 import { setLocalValue } from '../../../utils/storage';
 
-
 export function useLoginAPI() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { handleReqError } = useError();
   const { enqueueSnackbar } = useSnackbar();
-
 
   const loginAPI = async (data: TLoginReq) => {
     const payload = {
@@ -34,6 +32,7 @@ export function useLoginAPI() {
     onSuccess: async (rsp) => {
       if (rsp?.success && 'customer' in rsp) {
         dispatch(authenticateActions.setCustomerInfo(rsp.customer));
+        dispatch(authenticateActions.setAccessToken(rsp.accessToken));
 
         enqueueSnackbar(`Амжилттай нэвтэрлээ!`, {
           variant: 'success',

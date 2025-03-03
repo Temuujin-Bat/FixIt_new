@@ -4,6 +4,9 @@ import { Box, Typography } from '@mui/material';
 // Third party
 import { useFormContext } from 'react-hook-form';
 
+// Components
+import { TServices } from '../type.ts';
+
 const SecondStep = () => {
   const { setValue, watch } = useFormContext();
   const selectedWorker = watch('worker');
@@ -11,7 +14,7 @@ const SecondStep = () => {
 
   return (
     <>
-      {selectedWorker?.services?.map((service) => (
+      {selectedWorker?.services?.map((service: TServices) => (
         <Box
           key={service.id}
           sx={{
@@ -20,8 +23,8 @@ const SecondStep = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             border: '1px solid',
-            borderColor: selectedService?.id === service?.id ? 'secondary.light': 'secondary.light',
-            backgroundColor: selectedService?.id === service?.id ? 'secondary.lighter': 'white',
+            borderColor: selectedService?.id === service?.id ? 'secondary.light' : 'secondary.light',
+            backgroundColor: selectedService?.id === service?.id ? 'secondary.lighter' : 'white',
             borderRadius: 3,
             paddingX: 3,
             paddingY: 1,

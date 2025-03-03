@@ -1,7 +1,7 @@
 // MUI
 import { Box, Typography } from '@mui/material';
 
-const ModalFooter = () => {
+const Footer = () => {
   return (
     <Box sx={{ mt: 5, display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
       <Typography variant="h3">Fix It</Typography>
@@ -19,4 +19,4 @@ const ModalFooter = () => {
   );
 };
 
-export { ModalFooter };
+export { Footer };

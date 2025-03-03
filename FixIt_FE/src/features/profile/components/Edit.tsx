@@ -3,6 +3,7 @@ import { useState } from 'react';
 // MUI
 import { Avatar, Box, Button, Paper, Stack, Typography } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { Phone } from '@mui/icons-material';
 
 // Hooks
 import { useAppSelector } from '../../../hooks/useAppStore';
@@ -10,10 +11,9 @@ import { useAppSelector } from '../../../hooks/useAppStore';
 // Components
 import { getCustomerInfo } from '../../../store/authenticate/selectors';
 import { EditModal } from './EditModal';
-import { Phone } from '@mui/icons-material';
 
 const Edit = () => {
-  const [openModal, setOpenModal] = useState(false);
+  const [ openModal, setOpenModal ] = useState(false);
   const selectedCustomer = useAppSelector(getCustomerInfo);
 
   return (

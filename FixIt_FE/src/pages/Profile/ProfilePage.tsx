@@ -1,8 +1,10 @@
-import { Profile } from '../../features/profile';
+import { Profile } from "../../features/profile";
 
 const ProfilePage = () => {
   return (
-    <Profile />
+    <>
+      <Profile />
+    </>
   );
 };
 

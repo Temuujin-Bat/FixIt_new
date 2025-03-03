@@ -8,7 +8,9 @@ import { useFormContext } from 'react-hook-form';
 // Components
 import { TBarbershop } from '../type';
 
-const FirstStep = ({ barber }: { barber: TBarbershop }) => {
+const FirstStep = ({ barber, }: {
+  barber: TBarbershop | null,
+}) => {
   const { setValue, watch } = useFormContext();
   const selectedWorker = watch('worker');
 
@@ -21,8 +23,8 @@ const FirstStep = ({ barber }: { barber: TBarbershop }) => {
             display: 'flex',
             alignItems: 'center',
             border: '1px solid',
-            borderColor: selectedWorker?.id === worker?.id ? 'secondary.light': 'secondary.light',
-            backgroundColor: selectedWorker?.id === worker?.id ? 'secondary.lighter': 'white',
+            borderColor: selectedWorker?.id === worker?.id ? 'secondary.light' : 'secondary.light',
+            backgroundColor: selectedWorker?.id === worker?.id ? 'secondary.lighter' : 'white',
             borderRadius: 20,
             padding: 1,
             mb: 1,

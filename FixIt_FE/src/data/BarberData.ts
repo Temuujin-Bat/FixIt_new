@@ -2,108 +2,92 @@ import img from '../assets/check.png';
 
 export const barbershops = [
   {
-    id: 1,
+    id: 101,
+    logo: img,
     name: 'Classic Cuts Barbershop',
-    location: 'Sukhbaatar, Ulaanbaatar',
-    rating: 4.8,
+    location: {
+      address: 'Sukhbaatar, Ulaanbaatar',
+      XCoordinates: '47.91833514211403',
+      YCoordinates: '106.92797514483611',
+    },
+    phone: '111111111',
     image: img,
+    gallery: [
+      { id: 1, barberShopId: 101, image_url: img },
+      { id: 2, barberShopId: 101, image_url: img },
+      { id: 3, barberShopId: 101, image_url: img },
+      { id: 4, barberShopId: 101, image_url: img },
+    ],
+    facebookLink: 'https://www.facebook.com/',
+    instagramLink: 'https://www.instagram.com',
     workers: [
       {
         id: 201,
+        barberShopId: 101,
+        phone: '99999999',
         name: 'Tuvshin',
-        specialty: 'Barber',
+        startTime: '09:00',
+        endTime: '20:00',
         services: [
-          { id: 101, name: 'Үс засуулах', price: 35000, duration: 20 },
-          { id: 102, name: 'Beard Trim', price: 15000, duration: 15 }
-        ]
-      },
-      {
-        id: 202,
-        name: 'Baatar',
-        specialty: 'Barber',
-        services: [
-          { id: 103, name: 'Үс засуулах', price: 15000, duration: 20 },
-          { id: 102, name: 'Beard Trim', price: 15000, duration: 15 }
-        ]
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: 'Modern Man Barbers',
-    location: 'Bayangol, Ulaanbaatar',
-    rating: 4.5,
-    image: img,
-    workers: [
-      {
-        id: 203,
-        name: 'Ganbaatar',
-        specialty: 'Barber',
-        services: [
-          { id: 104, name: 'Men\'s Haircut', price: 18, duration: 20 },
-          { id: 105, name: 'Haircut & Beard', price: 30, duration: 30 }
-        ]
-      },
-      {
-        id: 204,
-        name: 'Erdene',
-        specialty: 'Barber',
-        services: [
-          { id: 106, name: 'Long Hair Trim', price: 25, duration: 30 },
-          { id: 105, name: 'Haircut & Beard', price: 30, duration: 30 }
-        ]
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: 'Royal Barber Lounge',
-    location: 'Khan-Uul, Ulaanbaatar',
-    rating: 4.9,
-    image: img,
-    workers: [
-      {
-        id: 205,
-        name: 'Temuulen',
-        specialty: 'Barber',
-        services: [
-          { id: 107, name: 'Men\'s Haircut', price: 22, duration: 20 },
-          { id: 108, name: 'Beard Grooming', price: 18, duration: 20 }
-        ]
-      },
-      {
-        id: 206,
-        name: 'Altan',
-        specialty: 'Barber',
-        services: [
-          { id: 109, name: 'Hair Coloring', price: 40, duration: 45 },
-          { id: 108, name: 'Beard Grooming', price: 18, duration: 20 }
+          {
+            id: 1,
+            workerId: 201,
+            name: 'Үс засуулах',
+            price: 35000,
+            duration: 20,
+          },
+          {
+            id: 2,
+            workerId: 201,
+            name: 'Үс засуулах + Сахал засуулах',
+            price: 40000,
+            duration: 20,
+          },
+        ],
+        unavailable: [
+          {
+            id: 1,
+            workerId: 201,
+            date: '2025-03-01',
+            start: '14:00',
+            end: '15:00',
+            note: 'Personal time'
+          },
+          {
+            id: 2,
+            workerId: 201,
+            date: '2025-03-02',
+            start: '00:00',
+            end: '23:59',
+            note: 'Day off'
+          },
+        ],
+        appointments: [
+          {
+            id: 1,
+            barberShopId: 101,
+            workerId: 201,
+            serviceId: 1,
+            customerName: 'Bataa',
+            phone: '99221122',
+            date: '2025-03-01',
+            startTime: '10:30',
+            endTime: '10:50',
+            note: 'I need a quick trim.',
+          },
         ]
       },
     ],
+    reviews: [
+      {
+        id: 1,
+        userId: 1,
+        barberShopId: 101,
+        userName: 'Temuujin',
+        rating: 4,
+        comment: 'sabf basbf jsabf j',
+        createdAt: '2025-03-02',
+      }
+    ]
   },
 ];
-
-export type Service = {
-  id: number;
-  name: string;
-  price: number;
-  duration: number;
-};
-
-export type Worker = {
-  id: number;
-  name: string;
-  specialty: string;
-  services: Service[];
-};
-
-export type Barbershop = {
-  id: number;
-  name: string;
-  location: string;
-  rating: number;
-  image: string;
-  workers: Worker[];
-};
-

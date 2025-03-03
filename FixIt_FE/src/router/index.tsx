@@ -1,18 +1,17 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
 // Third party
-import { useRoutes } from 'react-router-dom';
+import { useRoutes } from "react-router-dom";
 
 // Components
-import { AnimationWrapper } from '../layout/wrapper';
-import { MainLayout } from '../layout/main';
-import { ProtectedRoute } from './ProtectedRoute';
+import { AnimationWrapper } from "../layout/wrapper";
+import { MainLayout } from "../layout/main";
 
 // Pages
-const LazyDashboard = lazy(() => import('../pages/DashboardPage'));
-const LazyProfile = lazy(() => import('../pages/Profile/ProfilePage'));
-const LazyAppointments = lazy(() => import('../pages/Profile/AppointmentPage'));
-const LazyFavourites = lazy(() => import('../pages/Profile/FavouritesPage'));
+const LazyDashboard = lazy(() => import("../pages/DashboardPage"));
+const LazyProfile = lazy(() => import("../pages/Profile/ProfilePage"));
+const LazyAppointments = lazy(() => import("../pages/Profile/AppointmentPage"));
+const LazyFavourites = lazy(() => import("../pages/Profile/FavouritesPage"));
 
 const InitRoutes = () =>
   useRoutes([
@@ -24,7 +23,7 @@ const InitRoutes = () =>
       ),
       children: [
         {
-          path: '/',
+          path: "/",
           element: (
             <AnimationWrapper>
               <LazyDashboard />
@@ -32,7 +31,7 @@ const InitRoutes = () =>
           ),
         },
         {
-          path: '/profile',
+          path: "/profile",
           element: (
             <AnimationWrapper>
               <LazyProfile />
@@ -40,29 +39,25 @@ const InitRoutes = () =>
           ),
           children: [
             {
-              path: 'appointments',
+              path: "appointments",
               element: (
                 <AnimationWrapper>
-                  <ProtectedRoute>
-                    <LazyAppointments />
-                  </ProtectedRoute>
+                  <LazyAppointments />
                 </AnimationWrapper>
               ),
             },
             {
-              path: 'favourites',
+              path: "favourites",
               element: (
                 <AnimationWrapper>
-                  <ProtectedRoute>
-                    <LazyFavourites />
-                  </ProtectedRoute>
+                  <LazyFavourites />
                 </AnimationWrapper>
               ),
             },
           ],
         },
         {
-          path: '/appointments',
+          path: "/appointments",
           element: (
             <AnimationWrapper>
               <LazyAppointments />
@@ -74,4 +69,3 @@ const InitRoutes = () =>
   ]);
 
 export { InitRoutes };
-

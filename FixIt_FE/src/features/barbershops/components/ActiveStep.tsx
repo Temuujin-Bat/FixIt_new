@@ -15,16 +15,16 @@ const ActiveStep = ({ activeStep, totalSteps }: { activeStep: number, totalSteps
         transform: 'translateX(-50%)',
       }}
     >
-      {[...Array(totalSteps)].map((_, index) => {
+      {[ ...Array(totalSteps) ].map((_, index) => {
         const isFilled = index <= activeStep;
 
         return (
           <LinearProgress
             key={index}
             variant="determinate"
-            value={isFilled ? 100: 0}
+            value={isFilled ? 100 : 0}
             sx={{
-              width: '22%',
+              width: '15%',
               height: '100%',
               borderRadius: 2,
               backgroundColor: (theme) => theme.palette.grey[300],
