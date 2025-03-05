@@ -7,10 +7,13 @@ const register = async (phone: string, name: string, hashedPassword: string, rol
 };
 
 const findUserById = async (id: number) => {
-  const result = await pool.query("SELECT id, phone, name FROM users WHERE id = $1", [id]);
+  const result = await pool.query("SELECT id, phone, name, refresh_token, name_changes FROM users WHERE id = $1", [id]);
   return result.rows[0];
 };
 
+const incrementNameChangeCount = async (userId: string) => {
+  await pool.query("UPDATE users SET name_changes = name_changes + 1 WHERE id = $1", [userId]);
+};
 const updateUser = async (id: number, updatedData: { name?: string; }) => {
   const { name } = updatedData;
 
@@ -22,4 +25,4 @@ const updateUser = async (id: number, updatedData: { name?: string; }) => {
   return result.rows[0];
 };
 
-export { register, findUserById, updateUser };
+export { register, findUserById, incrementNameChangeCount, updateUser };

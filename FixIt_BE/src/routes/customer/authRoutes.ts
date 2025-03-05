@@ -1,13 +1,15 @@
+// Third party
 import express from 'express';
-import { customerLogin, customerRegister, logout } from '../../controllers/customer/authController';
-import { refreshToken } from '../../controllers/auth/refreshTokenController';
-import { authenticateUser } from '../../middlewares/authMiddleware';
+
+// Components
+import { customerLogin, customerRegister, logout, refreshToken } from '../../controllers/customer/authController';
+import { refreshTokenMiddleware } from '../../middlewares/customer/authMiddleware';
 
 const router = express.Router();
 
 router.post('/login', customerLogin);
 router.post('/register', customerRegister);
 router.post('/refresh', refreshToken);
-router.post('/logout',authenticateUser, logout)
+router.post('/logout',refreshTokenMiddleware, logout)
 
 export default router;
