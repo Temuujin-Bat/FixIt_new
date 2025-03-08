@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 
 import customerAuthRoutes from './routes/customer/authRoutes';
 import customerProfileRoutes from './routes/customer/profileRoutes';
-import customerAppointmentsRoutes from './routes/customer/appointmentsRoutes'
+import customerBarbershops from './routes/customer/barbershopsRoutes';
 
 dotenv.config();
 
@@ -25,15 +25,9 @@ app.get('/', (_,res)=>{
   res.send('FixIt Backend is Running!')
 })
 
-// app.use('/api/admin/auth');
-//
-// app.use('/api/business/auth');
-// app.use('/api/business/appointments');
-
 app.use('/api/customer/auth', customerAuthRoutes);
-app.use('/api/customer/profile', customerProfileRoutes)
-app.use('/api/customer/appointments', customerAppointmentsRoutes);
-
+app.use('/api/customer/profile', customerProfileRoutes);
+app.use('/api/customer/barbershops', customerBarbershops)
 
 const PORT=process.env.PORT || 5000;
 app.listen(PORT, () => {

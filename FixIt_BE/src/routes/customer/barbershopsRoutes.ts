@@ -2,7 +2,7 @@
 import express from 'express';
 
 // Components
-import { getAllBarbershopsController } from '../../controllers/customer/appointmentsController';
+import { getAllBarbershopsController } from '../../controllers/customer/barbershopsController';
 
 const router = express.Router();
 

@@ -1,5 +1,8 @@
+// Third party
 import { Request, Response } from "express";
-import { getAllBarbershops } from "../../models/customer/appointmentsModel";
+
+// Components
+import { getAllBarbershops } from "../../models/customer/barbershopsModel";
 
 const getAllBarbershopsController = async (req: Request, res: Response) => {
   try {
