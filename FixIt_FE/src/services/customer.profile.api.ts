@@ -2,6 +2,8 @@
 import { TAxiosError } from "../types/responses";
 import { BASE_URL } from "../../config";
 import { CONTROLLERS } from "../utils/enums";
+
+// Third party
 import { axiosInstance } from "../hooks/API/token";
 
 const CustomerProfileController = (accessToken: string | null) => {

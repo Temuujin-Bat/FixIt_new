@@ -12,7 +12,7 @@ const BarbershopsController = (accessToken: string | null) => {
   > => {
     try {
       const res = await axiosInstance.post<T>(
-        `${BASE_URL}/${controllerName}/appointments/get`,
+        `${BASE_URL}/${controllerName}/barbershops/get`,
         {},
         {
           headers: {
