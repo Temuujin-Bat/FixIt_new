@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 // MUI
 import {
@@ -41,6 +41,7 @@ const EditModal = ({ open, onClose }: TModal) => {
     () => ({
       name: selectedCustomer.name || "",
       phone: selectedCustomer.phone,
+      name_changes: selectedCustomer.name_changes,
     }),
     [selectedCustomer],
   );
@@ -50,7 +51,17 @@ const EditModal = ({ open, onClose }: TModal) => {
     resolver: yupResolver(updateProfileSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
+
+  useEffect(() => {
+    if (open) {
+      reset(defaultValues);
+    }
+  }, [open, reset, defaultValues]);
 
   const onSubmit = async (data: { name: string }) => {
     try {
@@ -113,10 +124,18 @@ const EditModal = ({ open, onClose }: TModal) => {
               name="phone"
               InputProps={{ readOnly: true }}
             />
+
+            {selectedCustomer?.name_changes === 1 && (
+              <Typography variant="subtitle2" color={"error.main"}>
+                Та нэрээ өөрчлөх эрх нэг удаа үлдсэн байна!
+              </Typography>
+            )}
           </Stack>
 
           <Button
-            disabled={isPending}
+            disabled={
+              isPending || !isDirty || selectedCustomer.name_changes === 2
+            }
             type="submit"
             fullWidth
             variant="contained"

@@ -1,10 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState } from "react";
 
 // MUI
-import { Box } from '@mui/material';
+import { Box } from "@mui/material";
 
 // Third party
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
 // Components
 import {
@@ -17,28 +17,28 @@ import {
   SixthStep,
   StepActions,
   StepTitle,
-  ThirdStep
-} from '../components';
-import { FormProvider } from '../../../components/hookForm';
-import { TBarbershop, TServices, TWorker } from '../type';
-import { useAppSelector } from '../../../hooks/useAppStore';
-import { getCustomerInfo } from '../../../store/authenticate/selectors';
+  ThirdStep,
+} from "../components";
+import { FormProvider } from "../../../components/hookForm";
+import { useAppSelector } from "../../../hooks/useAppStore";
+import { getCustomerInfo } from "../../../store/authenticate/selectors";
+import { TBarbershops, TServices, TWorker } from "../../../types";
 
-const BarberSelection = ({ barber }: { barber: TBarbershop | null }) => {
-  const [ activeStep, setActiveStep ] = useState<number>(0);
+const BarberSelection = ({ barber }: { barber: TBarbershops | null }) => {
+  const [activeStep, setActiveStep] = useState<number>(0);
   const selectedCustomer = useAppSelector(getCustomerInfo);
 
   const defaultValues = useMemo(
     () => ({
       worker: null as TWorker | null,
       service: null as TServices | null,
-      date: '',
-      time: '',
+      date: "",
+      time: "",
       name: selectedCustomer?.name,
       phone: selectedCustomer?.phone,
-      note: '',
+      note: "",
     }),
-    [ selectedCustomer ],
+    [selectedCustomer],
   );
 
   const methods = useForm({
@@ -46,22 +46,24 @@ const BarberSelection = ({ barber }: { barber: TBarbershop | null }) => {
   });
 
   const { watch } = methods;
-  console.log(watch('date'));
+  console.log(watch("date"));
 
   return (
     <FormProvider methods={methods}>
       <Box
         sx={{
           padding: 4,
-          backgroundColor: 'white',
+          backgroundColor: "white",
           borderRadius: 10,
           mt: 3,
-          position: 'relative'
-        }}>
+          position: "relative",
+        }}
+      >
         <ActiveStep activeStep={activeStep} totalSteps={5} />
 
-        {(activeStep != 0 && activeStep != 5) &&
-            <BackAction prev={() => setActiveStep(activeStep - 1)} />}
+        {activeStep != 0 && activeStep != 5 && (
+          <BackAction prev={() => setActiveStep(activeStep - 1)} />
+        )}
 
         <StepTitle step={activeStep} />
 

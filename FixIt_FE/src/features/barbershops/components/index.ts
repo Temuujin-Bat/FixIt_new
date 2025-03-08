@@ -1,21 +1,23 @@
-export * from './DashboardModal';
-export * from './DashboardDialog';
+export * from "./Barbershop";
 
-export * from './ActiveStep';
-export * from './StepActions';
-export * from './BackAction';
-export * from './StepTitle';
+export * from "./DashboardModal";
+export * from "./DashboardDialog";
 
-export * from './Header';
-export * from './BarberSelection';
-export * from './Gallery';
-export * from './RegisterBusinessAction';
-export * from './Reviews';
-export * from './Footer';
+export * from "./ActiveStep";
+export * from "./StepActions";
+export * from "./BackAction";
+export * from "./StepTitle";
 
-export * from './FirstStep';
-export * from './SecondStep';
-export * from './ThirdStep';
-export * from './FourthStep';
-export * from './FifthStep';
-export * from './SixthStep';
+export * from "./Header";
+export * from "./BarberSelection";
+export * from "./Gallery";
+export * from "./RegisterBusinessAction";
+export * from "./Reviews";
+export * from "./Footer";
+
+export * from "./FirstStep";
+export * from "./SecondStep";
+export * from "./ThirdStep";
+export * from "./FourthStep";
+export * from "./FifthStep";
+export * from "./SixthStep";

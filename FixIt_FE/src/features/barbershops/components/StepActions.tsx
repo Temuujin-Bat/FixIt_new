@@ -1,33 +1,33 @@
 // MUI
-import { Box, Button, } from '@mui/material';
-import { ArrowForwardIos } from '@mui/icons-material';
+import { Box, Button } from "@mui/material";
+import { ArrowForwardIos } from "@mui/icons-material";
 
 // Third party
-import { useFormContext } from 'react-hook-form';
+import { useFormContext } from "react-hook-form";
 
 // Components
-import { TStepActions } from '../type';
+import { IStepActions } from "../type";
 
-const StepActions = ({ activeStep, next }: TStepActions) => {
+const StepActions = ({ activeStep, next }: IStepActions) => {
   const { watch } = useFormContext();
-  const selectedWorker = watch('worker');
-  const selectedService = watch('service');
-  const selectedDate = watch('date');
-  const selectedTime = watch('time');
-  const selectedName = watch('name');
+  const selectedWorker = watch("worker");
+  const selectedService = watch("service");
+  const selectedDate = watch("date");
+  const selectedTime = watch("time");
+  const selectedName = watch("name");
 
   return (
-    <Box width={'100%'} mt={3}>
+    <Box width={"100%"} mt={3}>
       {activeStep == 0 && (
         <Button
           onClick={next}
           disabled={activeStep === 0 && !selectedWorker}
           sx={{
             borderRadius: 5,
-            backgroundColor: 'primary.dark',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: 2
+            backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
+            padding: 2,
           }}
           variant="contained"
           fullWidth
@@ -43,10 +43,10 @@ const StepActions = ({ activeStep, next }: TStepActions) => {
           disabled={activeStep === 1 && !selectedService}
           sx={{
             borderRadius: 5,
-            backgroundColor: 'primary.dark',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: 2
+            backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
+            padding: 2,
           }}
           variant="contained"
           fullWidth
@@ -62,10 +62,10 @@ const StepActions = ({ activeStep, next }: TStepActions) => {
           disabled={activeStep === 2 && !selectedDate}
           sx={{
             borderRadius: 5,
-            backgroundColor: 'primary.dark',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: 2
+            backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
+            padding: 2,
           }}
           variant="contained"
           fullWidth
@@ -81,10 +81,10 @@ const StepActions = ({ activeStep, next }: TStepActions) => {
           disabled={activeStep === 3 && !selectedTime}
           sx={{
             borderRadius: 5,
-            backgroundColor: 'primary.dark',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: 2
+            backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
+            padding: 2,
           }}
           variant="contained"
           fullWidth
@@ -100,10 +100,10 @@ const StepActions = ({ activeStep, next }: TStepActions) => {
           disabled={activeStep === 4 && !selectedName}
           sx={{
             borderRadius: 5,
-            backgroundColor: 'primary.dark',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: 2
+            backgroundColor: "primary.dark",
+            color: "white",
+            fontWeight: "bold",
+            padding: 2,
           }}
           variant="contained"
           fullWidth

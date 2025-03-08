@@ -1,36 +1,51 @@
 // MUI
-import { Box, Dialog } from '@mui/material';
+import { Box, Dialog } from "@mui/material";
 
 // Components
-import { BarberSelection, Footer, Gallery, Header, RegisterBusinessAction, Reviews } from '../components';
-import { TBarbershop } from '../type';
+import {
+  BarberSelection,
+  Footer,
+  Gallery,
+  Header,
+  RegisterBusinessAction,
+  Reviews,
+} from "../components";
+import { TBarbershops } from "../../../types";
 
-const DashboardDialog = ({ open, onClose, barber }: {
+const DashboardDialog = ({
+  open,
+  onClose,
+  barber,
+}: {
   open: boolean;
-  onClose: () => void,
-  barber: TBarbershop | null
+  onClose: () => void;
+  barber: TBarbershops | null;
 }) => {
-
   return (
     <Dialog fullScreen open={open} onClose={onClose}>
-      <Box sx={{
-        height: '100%',
-        overflowY: 'auto',
-        boxSizing: 'border-box',
-        backgroundColor: 'secondary.lighter',
-        '&::-webkit-scrollbar': { width: 6 },
-        '&::-webkit-scrollbar-thumb': { backgroundColor: '#888', borderRadius: '4px' },
-        '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#555' },
-      }}>
+      <Box
+        sx={{
+          height: "100%",
+          overflowY: "auto",
+          boxSizing: "border-box",
+          backgroundColor: "secondary.lighter",
+          "&::-webkit-scrollbar": { width: 6 },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#888",
+            borderRadius: "4px",
+          },
+          "&::-webkit-scrollbar-thumb:hover": { backgroundColor: "#555" },
+        }}
+      >
         <Header barber={barber} onClose={onClose} />
 
         <BarberSelection barber={barber} />
 
-        <Gallery />
+        <Gallery barber={barber} />
 
         <RegisterBusinessAction />
 
-        <Reviews />
+        <Reviews barber={barber} />
 
         <Footer />
       </Box>

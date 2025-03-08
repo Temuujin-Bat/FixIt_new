@@ -19,25 +19,18 @@ export function useError() {
         enqueueSnackbar("Утасны дугаар эсвэл нууц үг буруу байна", {
           variant: "error",
         });
+      } else if (
+        errorMessage?.includes("You can only change your name twice.")
+      ) {
+        enqueueSnackbar("Хэрэглэгч нэрээ 2 удаагаас илүү өөрчлөх боломжгүй.", {
+          variant: "error",
+        });
       } else {
         enqueueSnackbar(errorMessage, { variant: "error" });
       }
     }
 
     if (error?.response?.status === 401 || error.code === "ERR_NETWORK") {
-      // console.warn("401 Unauthorized detected. Trying to refresh token...");
-      //
-      // try {
-      //   const newAccessToken = await refreshAccessToken();
-      //
-      //   if (newAccessToken) {
-      //     console.log("Token refreshed successfully.");
-      //     return true;
-      //   }
-      // } catch (refreshError) {
-      //   console.error("Failed to refresh token:", refreshError);
-      // }
-
       enqueueSnackbar("Системээс гарлаа. Дахин нэвтэрнэ үү.", {
         variant: "warning",
       });

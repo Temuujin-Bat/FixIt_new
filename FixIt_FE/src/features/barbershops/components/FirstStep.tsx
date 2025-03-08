@@ -1,18 +1,16 @@
 // MUI
-import { Box, Typography } from '@mui/material';
-import { PermIdentity } from '@mui/icons-material';
+import { Box, Typography } from "@mui/material";
+import { PermIdentity } from "@mui/icons-material";
 
 // Third party
-import { useFormContext } from 'react-hook-form';
+import { useFormContext } from "react-hook-form";
 
 // Components
-import { TBarbershop } from '../type';
+import { TBarbershops } from "../../../types";
 
-const FirstStep = ({ barber, }: {
-  barber: TBarbershop | null,
-}) => {
+const FirstStep = ({ barber }: { barber: TBarbershops | null }) => {
   const { setValue, watch } = useFormContext();
-  const selectedWorker = watch('worker');
+  const selectedWorker = watch("worker");
 
   return (
     <>
@@ -20,19 +18,23 @@ const FirstStep = ({ barber, }: {
         <Box
           key={worker.id}
           sx={{
-            display: 'flex',
-            alignItems: 'center',
-            border: '1px solid',
-            borderColor: selectedWorker?.id === worker?.id ? 'secondary.light' : 'secondary.light',
-            backgroundColor: selectedWorker?.id === worker?.id ? 'secondary.lighter' : 'white',
+            display: "flex",
+            alignItems: "center",
+            border: "1px solid",
+            borderColor:
+              selectedWorker?.id === worker?.id
+                ? "secondary.light"
+                : "secondary.light",
+            backgroundColor:
+              selectedWorker?.id === worker?.id ? "secondary.lighter" : "white",
             borderRadius: 20,
             padding: 1,
             mb: 1,
-            '&:hover': {
-              cursor: 'pointer'
-            }
+            "&:hover": {
+              cursor: "pointer",
+            },
           }}
-          onClick={() => setValue('worker', worker)}
+          onClick={() => setValue("worker", worker)}
         >
           <PermIdentity />
           <Typography ml={1}>{worker.name}</Typography>

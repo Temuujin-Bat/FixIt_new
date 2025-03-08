@@ -19,12 +19,9 @@ const reducers = {
     ...state,
     accessToken: action.payload,
   }),
-  setIsRefreshing: (
-    state: TCustomerState,
-    action: PayloadAction<TCustomerState["isRefreshing"]>,
-  ) => ({
-    ...state,
-    isRefreshing: action.payload,
+  resetAuthState: () => ({
+    customerInfo: {} as TCustomerState["customerInfo"],
+    accessToken: null,
   }),
 };
 

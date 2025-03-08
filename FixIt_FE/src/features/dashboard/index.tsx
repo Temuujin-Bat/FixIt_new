@@ -1,10 +1,8 @@
 // Components
-import { BarberShop } from '../barbershops';
+import { BarbershopPage } from "../barbershops";
 
 const Dashboard = () => {
-  return (
-    <BarberShop />
-  );
+  return <BarbershopPage />;
 };
 
 export { Dashboard };

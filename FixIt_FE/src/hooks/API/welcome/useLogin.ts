@@ -1,16 +1,16 @@
 // Third party
-import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 // Components
-import { TLoginReq } from '../../../types/requests';
-import { WelcomeController } from '../../../services';
-import { TAxiosError, TLoginRes } from '../../../types/responses';
-import { useError } from '../../useError';
-import { useAppDispatch } from '../../useAppStore';
-import { authenticateActions } from '../../../store/authenticate/slice';
-import { setLocalValue } from '../../../utils/storage';
+import { TLoginReq } from "../../../types/requests";
+import { WelcomeController } from "../../../services";
+import { TAxiosError, TLoginRes } from "../../../types/responses";
+import { useError } from "../../useError";
+import { useAppDispatch } from "../../useAppStore";
+import { authenticateActions } from "../../../store/authenticate/slice";
+import { setLocalValue } from "../../../utils/storage";
 
 export function useLoginAPI() {
   const navigate = useNavigate();
@@ -30,25 +30,24 @@ export function useLoginAPI() {
   return useMutation({
     mutationFn: loginAPI,
     onSuccess: async (rsp) => {
-      if (rsp?.success && 'customer' in rsp) {
+      if (rsp?.success && "customer" in rsp) {
         dispatch(authenticateActions.setCustomerInfo(rsp.customer));
         dispatch(authenticateActions.setAccessToken(rsp.accessToken));
 
         enqueueSnackbar(`Амжилттай нэвтэрлээ!`, {
-          variant: 'success',
+          variant: "success",
         });
 
-        setLocalValue('phone', rsp.customer.phone);
+        setLocalValue("phone", rsp.customer.phone);
 
-        navigate('/');
-      } else if (rsp.error && rsp.error?.response?.status) {
-        handleReqError(rsp.error);
-      } else if ('msg' in rsp) {
+        navigate("/");
+      } else if ("msg" in rsp) {
         console.error(`ERROR! resend verification failed! ${rsp.msg}`);
       }
     },
-    onError: (error: TAxiosError) => {
+    onError: async (error: TAxiosError) => {
       console.error(`ERROR! login request threw an Exception! ${error}`);
+      await handleReqError(error);
     },
   });
 }

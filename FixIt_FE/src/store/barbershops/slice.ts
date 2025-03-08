@@ -5,27 +5,26 @@ import { persistReducer } from "redux-persist";
 
 // Components
 import { reducers } from "./reducers";
-import { TCustomerState } from "./type";
 import { PERSIST_KEYS, STORE_SLICES } from "../../utils/enums";
+import { TBarbershopsState } from "./type";
 
-const initialState: TCustomerState = {
-  customerInfo: {} as TCustomerState["customerInfo"],
-  accessToken: null as TCustomerState["accessToken"],
+const initialState: TBarbershopsState = {
+  barbershops: [],
 };
 
 export const slice = createSlice({
-  name: STORE_SLICES.AUTHENTICATE,
+  name: STORE_SLICES.BARBERSHOPS,
   initialState,
   reducers,
 });
 
-const authenticateActions = slice.actions;
+const barbershopsActions = slice.actions;
 
 const authPersistConfig = {
-  key: PERSIST_KEYS.AUTH,
+  key: PERSIST_KEYS.BARBERSHOPS,
   storage,
-  blacklist: ["accessToken"],
+  blacklist: [],
 };
 
-export { authenticateActions };
+export { barbershopsActions };
 export default persistReducer(authPersistConfig, slice.reducer);
