@@ -1,25 +1,21 @@
+// Third party
+import axios from "axios";
+
 // Components
 import { TAxiosError } from "../types/responses";
 import { BASE_URL } from "../../config";
 import { CONTROLLERS } from "../utils/enums";
-import { axiosInstance } from "../hooks/API/token";
 
-const BarbershopsController = (accessToken: string | null) => {
+const BarbershopsController = () => {
   const controllerName = CONTROLLERS.CUSTOMER;
 
   const getAllBarbershops = async <T>(): Promise<
     T | { success: boolean; error: TAxiosError }
   > => {
     try {
-      const res = await axiosInstance.post<T>(
+      const res = await axios.post<T>(
         `${BASE_URL}/${controllerName}/barbershops/get`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          withCredentials: true,
-        },
       );
 
       return res.data;

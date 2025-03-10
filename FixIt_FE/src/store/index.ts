@@ -5,11 +5,13 @@ import { persistStore } from "redux-persist";
 // Components
 import authReducer from "./authenticate/slice";
 import barbershopsReducer from "./barbershops/slice";
+import appointmentsReducer from "./appointments/slice";
 
 const store = configureStore({
   reducer: {
     authReducer,
     barbershopsReducer,
+    appointmentsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

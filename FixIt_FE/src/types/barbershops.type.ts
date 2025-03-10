@@ -1,3 +1,5 @@
+import { TAppointment } from "./appointments.type";
+
 export type TGallery = {
   id: number;
   barberShopId: number;
@@ -30,19 +32,6 @@ export type TUnavailableSlot = {
   date: string;
   start: string;
   end: string;
-  note: string;
-};
-
-export type TAppointment = {
-  id: number;
-  barberShopId: number;
-  workerId: number;
-  serviceId: number;
-  customerName: string;
-  phone: string;
-  date: string;
-  startTime: string;
-  endTime: string;
   note: string;
 };
 

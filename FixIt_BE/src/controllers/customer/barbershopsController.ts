@@ -14,7 +14,7 @@ const getAllBarbershopsController = async (req: Request, res: Response) => {
       barbershops,
     });
   } catch (error) {
-    console.error("Get All Appointment Error:", error);
+    console.error("Get All Barbershops Error:", error);
     res.status(500).json({ success: false, msg: "Server error" });
   }
 };

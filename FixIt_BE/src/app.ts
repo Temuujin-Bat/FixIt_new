@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 
 import customerAuthRoutes from './routes/customer/authRoutes';
 import customerProfileRoutes from './routes/customer/profileRoutes';
-import customerBarbershops from './routes/customer/barbershopsRoutes';
+import customerBarbershopsRoutes from './routes/customer/barbershopsRoutes';
+import customerAppointmentsRoutes from './routes/customer/appointmentsRoutes'
 
 dotenv.config();
 
@@ -27,7 +28,8 @@ app.get('/', (_,res)=>{
 
 app.use('/api/customer/auth', customerAuthRoutes);
 app.use('/api/customer/profile', customerProfileRoutes);
-app.use('/api/customer/barbershops', customerBarbershops)
+app.use('/api/customer/barbershops', customerBarbershopsRoutes);
+app.use('/api/customer/appointments', customerAppointmentsRoutes);
 
 const PORT=process.env.PORT || 5000;
 app.listen(PORT, () => {

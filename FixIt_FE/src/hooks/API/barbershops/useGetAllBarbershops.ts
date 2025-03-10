@@ -5,34 +5,29 @@ import { useQuery } from "@tanstack/react-query";
 import { useError } from "../../useError";
 import { QUERY_KEYS } from "../../../utils/enums";
 import { BarbershopsController } from "../../../services";
-import { useAppDispatch, useAppSelector } from "../../useAppStore";
-import { getAccessToken } from "../../../store/authenticate/selectors";
+import { useAppDispatch } from "../../useAppStore";
 import { TBarbershopRes } from "../../../types/responses";
 import { barbershopsActions } from "../../../store/barbershops/slice";
+import { TBarbershops } from "../../../types";
 
 export function useGetAllBarbershopsAPI() {
   const { handleReqError } = useError();
   const dispatch = useAppDispatch();
-  const accessToken = useAppSelector(getAccessToken);
 
   return useQuery({
     queryKey: [QUERY_KEYS.BARBER_SHOPS],
     queryFn: async () => {
       const rsp =
-        await BarbershopsController(
-          accessToken,
-        ).getAllBarbershops<TBarbershopRes>();
+        await BarbershopsController().getAllBarbershops<TBarbershopRes>();
 
       if (rsp?.success && "barbershops" in rsp) {
         dispatch(
-          barbershopsActions.setBarbershops(
-            rsp.barbershops as TBarbershopRes[],
-          ),
+          barbershopsActions.setBarbershops(rsp.barbershops as TBarbershops[]),
         );
       } else if (rsp?.error && rsp.error?.response?.status) {
         await handleReqError(rsp.error);
       } else if ("msg" in rsp) {
-        console.error(`ERROR! get profile data failed! ${rsp.msg}`);
+        console.error(`ERROR! get barbershops data failed! ${rsp.msg}`);
       }
 
       return rsp;
