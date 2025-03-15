@@ -4,14 +4,14 @@ import jwt from "jsonwebtoken";
 
 // Components
 import { findUserById, register } from '../../models/customer/userModel';
-import { findUserByPhoneAndRole, removeRefreshToken, updateRefreshToken } from '../../models/customer/authModel';
+import { findUserByPhone, removeRefreshToken, updateRefreshToken } from '../../models/customer/authModel';
 import { hashPassword, validatePassword } from "../../utils/authUtils";
 
 const customerLogin = async (req: Request, res: Response) => {
   const { phone, password } = req.body;
 
   try {
-    const user = await findUserByPhoneAndRole(phone, 'customer');
+    const user = await findUserByPhone(phone);
     if (!user) {
       res.status(400).json({ success: false, msg: 'Invalid phone number or password' });
       return;
@@ -65,7 +65,7 @@ const customerRegister = async (req: Request, res: Response) => {
   const role = 'customer';
 
   try {
-    const user = await findUserByPhoneAndRole(phone, 'customer');
+    const user = await findUserByPhone(phone);
     if (user) {
       res.status(400).json({ success: false, msg: 'Phone number is already registered' });
       return;
