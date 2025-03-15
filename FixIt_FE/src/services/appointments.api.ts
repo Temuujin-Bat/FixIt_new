@@ -10,7 +10,7 @@ const CustomerAppointmentsController = (accessToken: string | null) => {
   const controllerName = CONTROLLERS.CUSTOMER;
 
   const getUserAppointments = async <T>(data: {
-    phone: string;
+    phone: string | undefined;
   }): Promise<T | { success: boolean; error: TAxiosError }> => {
     try {
       const res = await axiosInstance.post<T>(

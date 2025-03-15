@@ -13,7 +13,7 @@ const initialState: TAppointmentsState = {
 };
 
 export const slice = createSlice({
-  name: STORE_SLICES.AUTHENTICATE,
+  name: STORE_SLICES.APPOINTMENTS,
   initialState,
   reducers,
 });
@@ -21,9 +21,8 @@ export const slice = createSlice({
 const appointmentsActions = slice.actions;
 
 const authPersistConfig = {
-  key: PERSIST_KEYS.AUTH,
+  key: PERSIST_KEYS.APPOINTMENTS,
   storage,
-  blacklist: ["accessToken"],
 };
 
 export { appointmentsActions };

@@ -1,43 +1,44 @@
 // Third party
-import { useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // Components
-import { TAppointmentsRes, TAxiosError } from "../../../types/responses";
+import { TAppointmentsRes } from "../../../types/responses";
 import { useError } from "../../useError";
 import { useAppDispatch, useAppSelector } from "../../useAppStore";
-import { getAccessToken } from "../../../store/authenticate/selectors";
+import {
+  getAccessToken,
+  getCustomerInfo,
+} from "../../../store/authenticate/selectors";
 import { CustomerAppointmentsController } from "../../../services/appointments.api";
 import { appointmentsActions } from "../../../store/appointments/slice";
+import { QUERY_KEYS } from "../../../utils/enums";
 
 export function useGetUserAppointmentsAPI() {
-  const dispatch = useAppDispatch();
   const { handleReqError } = useError();
+  const dispatch = useAppDispatch();
   const accessToken = useAppSelector(getAccessToken);
+  const selectedCustomer = useAppSelector(getCustomerInfo);
 
-  const getAppointmentsAPI = async (data: { phone: string }) => {
-    const payload = {
-      phone: data.phone,
-    };
+  return useQuery({
+    queryKey: [QUERY_KEYS.USER_APPOINTMENTS],
+    queryFn: async () => {
+      const rsp = await CustomerAppointmentsController(
+        accessToken,
+      ).getUserAppointments<TAppointmentsRes>({
+        phone: selectedCustomer.phone,
+      });
 
-    return await CustomerAppointmentsController(
-      accessToken,
-    ).getUserAppointments<TAppointmentsRes>(payload);
-  };
+      console.log(rsp);
 
-  return useMutation({
-    mutationFn: getAppointmentsAPI,
-    onSuccess: async (rsp) => {
-      if (rsp?.success && "appointments" in rsp) {
-        dispatch(appointmentsActions.setUserAppointments(rsp.appointments));
+      if (rsp?.success && "userAppointments" in rsp) {
+        dispatch(appointmentsActions.setUserAppointments(rsp.userAppointments));
+      } else if (rsp?.error && rsp.error?.response?.status) {
+        await handleReqError(rsp.error);
       } else if ("msg" in rsp) {
-        console.error(`ERROR! resend verification failed! ${rsp.msg}`);
+        console.error(`ERROR! get appointments data failed! ${rsp.msg}`);
       }
-    },
-    onError: async (error: TAxiosError) => {
-      console.error(
-        `ERROR! get user appointments request threw an Exception! ${error}`,
-      );
-      await handleReqError(error);
+
+      return rsp;
     },
   });
 }

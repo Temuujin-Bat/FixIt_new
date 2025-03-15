@@ -25,6 +25,7 @@ const Header = ({
   barber: TBarbershops | null;
   onClose: () => void;
 }) => {
+  console.log(barber);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 

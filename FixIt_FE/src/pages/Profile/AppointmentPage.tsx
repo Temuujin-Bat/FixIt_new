@@ -1,61 +1,48 @@
 // MUI
-import { Box, Button, Container, Tooltip, Typography } from '@mui/material';
-import { ArrowBack, HeartBroken } from '@mui/icons-material';
+import { Box, Container, Tooltip, Typography } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 
 // Third party
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 // Components
-import { ProfileTitle } from '../../features/profile/components';
+import { Appointments } from "../../features/appointments";
+import { ProfileTitle } from "../../features/profile/components";
+
+// Hooks
+import { useGetUserAppointmentsAPI } from "../../hooks/API/appointments";
 
 const AppointmentPage = () => {
   const navigate = useNavigate();
+  const { isPending } = useGetUserAppointmentsAPI();
+
+  if (isPending) {
+    return <h1>Loading...</h1>;
+  }
 
   return (
     <Container maxWidth="xs">
       <Box
+        onClick={() => navigate(-1)}
         sx={{
-          display: 'flex', flexDirection: 'row', alignItems: 'center', mt: 5, mb: 3
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          mt: 5,
+          mb: 3,
         }}
       >
         <Tooltip title="Буцах">
-          <ArrowBack
-            sx={{ mr: 1, '&:hover': { cursor: 'pointer' } }}
-            onClick={() => navigate(-1)}
-          />
+          <ArrowBack sx={{ mr: 1, "&:hover": { cursor: "pointer" } }} />
         </Tooltip>
         <ProfileTitle text="Миний цагууд" />
       </Box>
 
+      <Typography variant="h6" sx={{ mb: 3 }}>
+        Ирээдүйн цагууд
+      </Typography>
 
-      <Box sx={{
-        border: '1px solid',
-        borderColor: 'secondary.lighter',
-        padding: 3,
-        borderRadius: 2.5,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}>
-        <HeartBroken fontSize="large" sx={{ mt: 5, mb: 2, color: 'primary.main' }} />
-
-        <Typography textAlign="center" variant="h4">Таны ирээдүйн цагууд байхгүй байна</Typography>
-        <Typography mt={.5} textAlign="center" variant="body1" color="secondary.dark">Энд таны цагууд таны төвлөж
-          дууссаны дараа гарч ирнэ</Typography>
-
-        <Button onClick={() => navigate('/')} fullWidth variant="contained"
-                sx={{
-                  boxShadow: 'none',
-                  fontWeight: 'bold',
-                  color: 'white',
-                  borderRadius: 2.5,
-                  padding: 1.5,
-                  mt: 3
-                }}>
-          Бизнес хайх
-        </Button>
-      </Box>
+      <Appointments />
     </Container>
   );
 };

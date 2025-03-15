@@ -3,11 +3,9 @@ export type TAppointment = {
   barbershopId: number;
   workerId: number;
   serviceId: number;
-  customerName: string;
-  phone: string;
+  userId: number;
   date: string;
   startTime: string;
   endTime: string;
   note: string;
-  createdAt: string;
 };

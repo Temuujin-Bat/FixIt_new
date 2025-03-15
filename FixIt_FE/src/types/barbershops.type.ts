@@ -2,7 +2,7 @@ import { TAppointment } from "./appointments.type";
 
 export type TGallery = {
   id: number;
-  barberShopId: number;
+  barbershopId: number;
   image_url: string;
 };
 
@@ -16,9 +16,9 @@ export type TServices = {
 
 export type TWorker = {
   id: number;
-  barberShopId: number;
-  phone: string;
+  barbershopId: number;
   name: string;
+  phone: string;
   startTime: string;
   endTime: string;
   services: TServices[];
@@ -48,14 +48,13 @@ export type TReview = {
 export type TBarbershops = {
   id: number;
   name: string;
-  logo?: string;
+  phone: string;
   location: {
     address: string;
     XCoordinates?: string;
     YCoordinates?: string;
   };
-  phone: string;
-  image: string;
+  logo?: string;
   facebookLink?: string;
   instagramLink?: string;
   gallery: TGallery[];
